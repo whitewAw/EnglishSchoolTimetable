@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="BlueBox© whitewAw@gmail.com">
+    <meta name="copyright" content="BlueBox© whitewAw@gmail.com">
+    <meta name="keywords" content="Broadway English School" />
+    <meta name="Description" content="Broadway English School">
+    <title>@ViewBag.Title – Broadway English School Timetable</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fullcalendarcss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/fullcalendarjs")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Broadway English School", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("settingNavbar")
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @{
+        string el = Request.RawUrl;
+        if (el == "/teacher" || el.Contains("teacher?") || el == "/student" || el.Contains("student?")
+            || el == "/timetableByDate" || el.Contains("timetableByDate?") || el == "/accessibilityOfTeachers" || el.Contains("accessibilityOfTeachers?")
+            || el == "/accessibilityOfRoom" || el.Contains("accessibilityOfRoom?") || el == "/timetableByDateTeacher" || el.Contains("timetableByDateTeacher?"))
+        {
+            
+
+            el = "container-fluid";
+        }
+        else
+        {
+            el = "container";
+        }
+    }
+    <div class="@el body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; Broadway English School 2018-@DateTime.Now.Year</p>
+        </footer>
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

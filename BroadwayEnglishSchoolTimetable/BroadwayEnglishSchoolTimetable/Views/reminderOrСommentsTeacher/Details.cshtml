@@ -1,0 +1,53 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.reminderOrСommentsTeacherPL
+
+@{
+    ViewBag.Title = "Подробности про заметку для преподователя";
+}
+
+<h2>Подробности про заметку для преподователя</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TeachersName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeachersName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.datePL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datePL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.timePL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.timePL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+    </dl>
+</div>
+
+@if (User.IsInRole("supAdmin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

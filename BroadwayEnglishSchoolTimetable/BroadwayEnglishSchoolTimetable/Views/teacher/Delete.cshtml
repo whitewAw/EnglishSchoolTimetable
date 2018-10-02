@@ -1,0 +1,156 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.teacherPL
+
+@{
+    ViewBag.Title = "Удаление преподователя";
+}
+
+<h2>Удаление преподователя</h2>
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateOfBirth)
+        </dt>
+
+        <dd>
+            @if (Model.dateOfBirth.HasValue)
+        {
+            @Model.dateOfBirth.Value.ToString("dd/MM/yyyy")
+    }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.startDate)
+        </dt>
+
+        <dd>
+            @Model.startDate.ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endDate)
+        </dt>
+
+        <dd>
+            @if (@Model.endDate.HasValue)
+        {
+            @Model.endDate.Value.ToString("dd/MM/yyyy")
+    }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.forBeginners)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.forBeginners)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateCreate)
+        </dt>
+
+        <dd>
+            @Model.dateCreate.ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.levelOfEnglish)
+        </dt>
+        <dd>
+            @foreach (var el in Model.NamelevelOfEnglish)
+        {
+            @Html.DisplayFor(model => el)<br />
+    }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accessibilityOfTeacherBig)
+        </dt>
+        <dd>
+            <table>
+                @foreach (var el in Model.accessibilityOfTeacher)
+            {
+                <tr>
+                    <td colspan="2">
+                        <i>@Html.DisplayFor(model => el.DaysOfTheWeekName)</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => el.startTime)</b></td>
+                    <td>@Html.DisplayFor(model => el.startTime)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => el.endTime)</b></td>
+                    <td>@Html.DisplayFor(model => el.endTime)</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; min-width:6em;"><b>@Html.DisplayNameFor(model => el.notes)</b></td>
+                    <td>@Html.DisplayFor(model => el.notes)</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /></td>
+                </tr>
+        }
+            </table>
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

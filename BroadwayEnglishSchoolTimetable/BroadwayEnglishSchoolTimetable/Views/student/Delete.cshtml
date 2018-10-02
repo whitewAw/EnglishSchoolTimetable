@@ -1,0 +1,155 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.studentPL
+
+@{
+    ViewBag.Title = "Удаление студента";
+}
+
+<h2>Удаление студента</h2>
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.surname != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+}
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mail)
+        </dd>
+
+        @if (Model.phoneNumber != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.phoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phoneNumber)
+        </dd>
+}
+
+        @if (Model.dateOfBirth != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.dateOfBirth)
+        </dt>
+
+        <dd>
+            @Model.dateOfBirth.Value.ToString("dd/MM/yyyy")
+        </dd>
+}
+
+        @if (Model.idParent != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.Parent)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Parent, "Details", "parentsOfStudent", new { id = Model.idParent }, null)
+        </dd>
+}
+
+        @if (Model.idFormOfEducation != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.FormOfEducation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormOfEducation)
+        </dd>
+}
+        @if (Model.idEducationalMaterials != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.EducationalMaterials)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EducationalMaterials)
+        </dd>
+}
+
+        @if (Model.idLevelOfEnglish != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.LevelOfEnglish)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LevelOfEnglish)
+        </dd>
+}
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateCreate)
+        </dt>
+
+        <dd>
+            @Model.dateCreate.ToString("dd/MM/yyyy")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isFirstLesson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isFirstLesson)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.disable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.disable)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

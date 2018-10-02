@@ -1,0 +1,74 @@
+﻿@if (Request.IsAuthenticated && User.IsInRole("admin"))
+{
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#5" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-calendar"></i> Расписание<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Календарь по преподавателям", "Index", "accessibilityOfTeachers")</li>
+                <li>@Html.ActionLink("Календарь по кабинетам", "Index", "accessibilityOfRoom")</li>
+                <li>@Html.ActionLink("Расписание занятий", "Index", "timetableByDate")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Напоминания", "Index", "reminderOrСomments")</li>
+                @if (User.IsInRole("supAdmin"))
+                {
+                    <li>@Html.ActionLink("Напоминания для преподователей", "Index", "reminderOrСommentsTeacher")</li>
+                }
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Cписок ожидания клиентов", "Index", "waitingList")</li>
+            </ul>
+
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#4" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Люди<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Студенты", "Index", "student")</li>
+                <li>@Html.ActionLink("Группы", "Index", "group")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Родители", "Index", "parentsOfStudent")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Администраторы", "Index", "AdminLists")</li>
+                <li>@Html.ActionLink("Преподаватели", "Index", "teacher")</li>
+            </ul>
+        </li>
+        @if (User.IsInRole("supAdmin"))
+        {
+            <li class="dropdown">
+                <a class="dropdown-toggle" href="#3" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-wrench"></i> Настройки<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Учебники/учебные курсы", "Index", "educationalMaterial")</li>
+                    <li>@Html.ActionLink("Уровни английского языка", "Index", "levelOfEnglish")</li>
+                    <li>@Html.ActionLink("Формы обучения", "Index", "formOfEducation")</li>
+                    <li>@Html.ActionLink("Список кабинетов", "Index", "classroom")</li>
+                    <li>@Html.ActionLink("Причины отмены занятий", "Index", "causeOfDisruption")</li>
+                    <li class="divider"></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" href="#2" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> Константы<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Главная почта", "Index", "mainMail")</li>
+                    <li>@Html.ActionLink("Бизнес время школы", "Index", "openingHour")</li>
+                    <li>@Html.ActionLink("Дни недели", "Index", "daysOfTheWeek")</li>
+                    <li class="divider"></li>
+                </ul>
+            </li>
+        }
+    </ul>
+}
+
+@if (Request.IsAuthenticated && User.IsInRole("teacher") && !User.IsInRole("admin"))
+{
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#1" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-calendar"></i> Расписание<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Календарь", "Index", "calendarForTeachersOnly")</li>
+                <li>@Html.ActionLink("Расписание", "Index", "timetableByDateTeacher")</li>
+            </ul>
+    </ul>
+}

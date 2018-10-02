@@ -1,0 +1,79 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.parentsOfStudentPL>
+
+@{
+    ViewBag.Title = "Список родителей";
+}
+
+<h2>Список родителей</h2>
+<form class="form-inline" method="get">
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.SurNameSearch): &nbsp;
+        @Html.TextBox("surnameS", @ViewBag.surnameS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.NameSearch): &nbsp;
+        @Html.TextBox("nameS", @ViewBag.nameS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.surname).ToString(), "Index", new { sortOrder = @ViewBag.SurnameSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.name).ToString(), "Index", new { sortOrder = @ViewBag.NameSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.patronymic).ToString(), "Index", new { sortOrder = @ViewBag.PatronymicSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.mail).ToString(), "Index", new { sortOrder = @ViewBag.MailSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.phoneNumber).ToString(), "Index", new { sortOrder = @ViewBag.PhoneNumberSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.disable).ToString(), "Index", new { sortOrder = @ViewBag.DisableSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.disable)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (User.IsInRole("supAdmin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

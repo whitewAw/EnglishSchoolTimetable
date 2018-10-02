@@ -1,0 +1,183 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.forCalendarPL
+
+@{
+    ViewBag.Title = "Расписание по кабинетам";
+}
+
+<h2>Расписание по кабинетам</h2>
+
+<details>
+    <summary> @Html.LabelFor(model => model.waitingList)</summary>
+    @if (Model.waitingList.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.waitingList.FirstOrDefault().idStudents)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.waitingList.FirstOrDefault().dateTarget_)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.waitingList.FirstOrDefault().idAdmin)
+                </th>
+                <th style="max-width:15em; min-width:9em;">
+                    @Html.DisplayNameFor(model => model.waitingList.FirstOrDefault().notes)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.waitingList)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.FullNameStud, "Details", "student", new { id = item.studentEl.Id }, new { target = "_blank" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateTarget_)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.FullNameAdmin, "Details", "AdminLists", new { id = item.adminEl.Id }, new { target = "_blank" })
+                    </td>
+                    <td style="max-width:15em; min-width:9em;">
+                        @Html.DisplayFor(modelItem => item.notes)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "waitingList", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</details>
+
+<details>
+    <summary> @Html.LabelFor(model => model.reminderOrСomments)</summary>
+    @if (Model.reminderOrСomments.Count > 0)
+    {
+        <table class="table">
+            <tr>
+            <tr>
+                <th>
+                   @Html.DisplayNameFor(model => model.reminderOrСomments.FirstOrDefault().AdminName)
+                </th>
+                <th>
+                   @Html.DisplayNameFor(model => model.reminderOrСomments.FirstOrDefault().date)
+                </th>
+                <th style="max-width:18em; min-width:9em;">
+                    @Html.DisplayNameFor(model => model.reminderOrСomments.FirstOrDefault().notes)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.reminderOrСomments)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.AdminName, "Details", "AdminLists", new { id = item.idAdmin }, new { target = "_blank" })
+                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td style="max-width:18em; min-width:9em;">
+                        @Html.DisplayFor(modelItem => item.notes)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "reminderOrСomments", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</details>
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="calendar"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                // header: {
+                //     left: 'month,agendaWeek,agendaDay',
+                //     center: 'title',
+                //     right: 'custom2 prevYear,prev,next,nextYear'
+                //},
+                contentHeight: "auto",
+                themeSystem: 'bootstrap3',
+               // weekends: false,
+                 //'standard'
+                 //    bootstrap3
+                 //bootstrap3
+                        locale: 'ru',
+                defaultView: 'agendaDay',
+                nowIndicator: true,
+                height: "auto",
+                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+
+                now: new Date(),
+
+                 minTime: "@Model.openingHour.open.ToString()",
+                 maxTime: "@Model.openingHour.close.ToString()",
+                 allDaySlot: false,
+                 refetchResourcesOnNavigate: true,
+
+                 resourceRender: function (resourceObj, $th) {
+                     $th.append('<a href="/classroom/Details/' + resourceObj.id +'" target="_blank">(?)</a>'
+
+                    );
+                 },
+                 resources: function (callback, start, end) {
+
+                     $.getJSON('@Url.Action("GetResources", "accessibilityOfRoom")', { pointStar: start.format('DD/MM/YYYY hh:mm:ss'), pointEnd: end.format('DD/MM/YYYY hh:mm:ss')}, function (data) {
+                         var resources = [];
+                         $.each(data, function (i, item) {
+                             //console.log(item);
+                             resources.push({
+                                 id: item.Id, title: item.Title, businessHours: {
+                                     dow: [0, 1, 2, 3, 4, 5, 6],
+                                     start: item.startT,
+                                     end: item.endT
+                                 }
+                             });
+                         })
+                         callback(resources);
+                     });
+                 },
+
+                 events: function (start, end, timezone, callback) {
+                   $.getJSON('@Url.Action("GetEvents", "accessibilityOfRoom")', { pointStar: start.format('DD/MM/YYYY hh:mm:ss'), pointEnd: end.format('DD/MM/YYYY hh:mm:ss')}, function (data) {
+                         var events = [];
+                         $.each(data, function (i, item) {
+                             //console.log(item);
+                             events.push({
+                                 id: item.id,
+                                 resourceId: item.resourceId,
+                                 title: item.title,
+                                 start: parseInt(item.start)*1000,
+                                 end: parseInt(item.end)*1000,
+                                 url: '/timetableByDate/Details/' + item.id,
+                                 color: item.color,
+                                 textColor: item.textColor,
+                                 borderColor: "black",
+                             });
+                         })
+                       callback(events);
+                     });
+                 },
+                 eventClick: function (event) {
+                     if (event.url) {
+                         window.open(event.url);
+                         return false;
+                     }
+                 }
+            });
+        });
+    </script>
+}
+

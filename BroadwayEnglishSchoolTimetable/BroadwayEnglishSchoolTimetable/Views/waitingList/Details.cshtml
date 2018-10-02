@@ -1,0 +1,47 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.waitingListPL
+
+@{
+    ViewBag.Title = "Детально";
+}
+
+<h2>Детально</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.idStudents)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.FullNameStud, "Details", "student", new { id = Model.studentEl.Id }, new { target = "_blank" })
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dateTarget_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateTarget_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idAdmin)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.FullNameAdmin, "Details", "AdminLists", new { id = Model.studentEl.Id }, new { target = "_blank" })
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+     </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

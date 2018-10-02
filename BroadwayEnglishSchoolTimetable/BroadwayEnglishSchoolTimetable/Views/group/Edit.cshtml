@@ -1,0 +1,157 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.groupPL
+
+@{
+    ViewBag.Title = "Редактирование группы";
+}
+
+<h2>Редактирование названия группы</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.idLevelOfEnglish)
+    
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.levelOfEnglish, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.levelOfEnglish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.idEducationalMaterials, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.idEducationalMaterials, ViewBag.educationalMaterials as SelectList)
+            @Html.ValidationMessageFor(model => model.idEducationalMaterials, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.notes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.disable, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.disable)
+                @Html.ValidationMessageFor(model => model.disable, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+    <table class="table">
+        <tr>
+            <th colspan="10" style="text-align:center">
+                <b>Список студентов:</b>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().Id).ToString(), "Edit", new { sortOrder = @ViewBag.idSort })
+            </th>
+            <th>
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().surname).ToString(), "Edit", new { sortOrder = @ViewBag.SurnameSort })
+            </th>
+            <th>
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().name).ToString(), "Edit", new { sortOrder = @ViewBag.NameSort })
+            </th>
+            <th class="hidden-xs hidden-sm hidden-md">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().patronymic).ToString(), "Edit", new { sortOrder = @ViewBag.PatronymicSort })
+            </th>
+            <th>
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().mail).ToString(), "Edit", new { sortOrder = @ViewBag.MailSort })
+            </th>
+            <th style="max-width:8em; min-width:8em;">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().phoneNumber).ToString(), "Edit", new { sortOrder = @ViewBag.PhoneNumberSort })
+            </th>
+            <th class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().dateOfBirth).ToString(), "Edit", new { sortOrder = @ViewBag.DateOfBirthSort })
+            </th>
+            <th class="hidden-xs hidden-sm">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().idLevelOfEnglish).ToString(), "Edit", new { sortOrder = @ViewBag.LevelOfEnglishSort })
+            </th>
+            <th class="hidden-xs hidden-sm" style="min-width:7em;">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().dateCreate).ToString(), "Edit", new { sortOrder = @ViewBag.DateCreateSort })
+            </th>
+            <th class="hidden-xs hidden-sm hidden-md">
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().isFirstLesson).ToString(), "Edit", new { sortOrder = @ViewBag.isFirstLessonSort })
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.studentBig)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md">
+                    @Html.DisplayFor(modelItem => item.patronymic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mail)
+                </td>
+                <td style="max-width:8em; min-width:8em;">
+                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                </td>
+                <td class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+                    @Html.DisplayFor(modelItem => item.dateOfBirth)
+                </td>
+                <td class="hidden-xs hidden-sm">
+                    @Html.DisplayFor(modelItem => item.LevelOfEnglish)
+                </td>
+                <td class="hidden-xs hidden-sm" style="min-width:7em;">
+                    @Html.DisplayFor(modelItem => item.dateCreate)
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md">
+                    @Html.DisplayFor(modelItem => item.isFirstLesson)
+                </td>
+                <td>
+                    <input type="checkbox" name="studentSelect" @(Model.studentSelect.Contains(item.Id) ? "checked=\"checked\"" : "") value="@item.Id" />
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

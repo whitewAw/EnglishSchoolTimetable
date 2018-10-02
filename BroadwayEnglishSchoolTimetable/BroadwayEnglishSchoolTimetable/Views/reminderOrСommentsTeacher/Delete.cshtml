@@ -1,0 +1,55 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.reminderOrСommentsTeacherPL
+
+@{
+    ViewBag.Title = "Удаление заметки для преподователя";
+}
+
+<h2>Удаление заметки для преподователя</h2>
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TeachersName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeachersName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.datePL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datePL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.timePL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.timePL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

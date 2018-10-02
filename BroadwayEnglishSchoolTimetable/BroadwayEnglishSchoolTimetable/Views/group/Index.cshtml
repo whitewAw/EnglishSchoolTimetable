@@ -1,0 +1,86 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.groupPL>
+
+@{
+    ViewBag.Title = "Список групп";
+}
+
+<h2>Список групп</h2>
+
+<form class="form-inline" method="get">
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.GroupSearch): &nbsp;
+        @Html.TextBox("GroupSearchS", @ViewBag.GroupSearchS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.StudentSearch): &nbsp;
+        @Html.TextBox("StudentSearchS", @ViewBag.StudentSearchS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.Id).ToString(), "Index", new { sortOrder = @ViewBag.IdSort, StudentSearchS = @ViewBag.StudentSearchS as string, GroupSearchS = @ViewBag.GroupSearchS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.nameGroup).ToString(), "Index", new { sortOrder = @ViewBag.NameSort, StudentSearchS = @ViewBag.StudentSearchS as string, GroupSearchS = @ViewBag.GroupSearchS as string })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.student)
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idEducationalMaterials).ToString(), "Index", new { sortOrder = @ViewBag.EducationalMaterialsSort, StudentSearchS = @ViewBag.StudentSearchS as string, GroupSearchS = @ViewBag.GroupSearchS as string })
+        </th>
+        <th class="hidden-xs" style="max-width:15em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.notes)
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.disable).ToString(), "Index", new { sortOrder = @ViewBag.DisableSort, StudentSearchS = @ViewBag.StudentSearchS as string, GroupSearchS = @ViewBag.GroupSearchS as string })
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nameGroup)
+            </td>
+            <td>
+                @foreach (var Namestudent in item.student)
+                {
+                    @Html.ActionLink(Namestudent.FullName, "Details", "student", new { id = Namestudent.Id }, new { target = "_blank" })<br />
+                }
+            </td>
+            <td>
+                @Html.ActionLink(item.nameEducationalMaterials, "Details", "educationalMaterial", new { id = item.idEducationalMaterials }, new { target = "_blank" })<br />
+            </td>
+            <td class="hidden-xs" style="max-width:15em; min-width:9em;">
+                @Html.DisplayFor(modelItem => item.notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.disable)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (User.IsInRole("supAdmin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

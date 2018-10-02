@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.waitingListPL>
+
+@{
+    ViewBag.Title = "Cписок ожидания клиентов";
+}
+
+<h2>Cписок ожидания клиентов</h2>
+<form class="form-inline" method="get">
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.studentEl): &nbsp;
+        @Html.TextBox("StudentSearchS", @ViewBag.StudentSearchS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idStudents).ToString(), "Index", new { sortOrder = @ViewBag.StudentSort, StudentSearchS = @ViewBag.StudentSearchS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.dateTarget_).ToString(), "Index", new { sortOrder = @ViewBag.DateSort, StudentSearchS = @ViewBag.StudentSearchS as string })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idAdmin).ToString(), "Index", new { sortOrder = @ViewBag.AdminSort, StudentSearchS = @ViewBag.StudentSearchS as string })
+        </th>
+        <th style="max-width:20em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.notes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.FullNameStud, "Details", "student", new { id = item.studentEl.Id }, new { target = "_blank" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateTarget_)
+        </td>
+        <td>
+            @Html.ActionLink(item.FullNameAdmin, "Details", "AdminLists", new { id = item.adminEl.Id }, new { target = "_blank" })
+        </td>
+        <td style="max-width:20em; min-width:9em;">
+            @Html.DisplayFor(modelItem => item.notes)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

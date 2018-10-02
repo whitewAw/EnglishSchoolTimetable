@@ -1,0 +1,125 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.forCalendarPL
+@{
+    ViewBag.Title = "Расписание по преподавателям";
+}
+
+<h2>Расписание по преподавателям</h2>
+
+<details>
+    <summary> @Html.LabelFor(model => model.reminderOrСommentsTeacher)</summary>
+    @if (Model.reminderOrСommentsTeacher.Count > 0)
+    {
+        <table class="table">
+            <tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.reminderOrСommentsTeacher.FirstOrDefault().date)
+                </th>
+                <th style="max-width:18em; min-width:9em;">
+                    @Html.DisplayNameFor(model => model.reminderOrСommentsTeacher.FirstOrDefault().notes)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.reminderOrСommentsTeacher)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td style="max-width:18em; min-width:9em;">
+                        @Html.DisplayFor(modelItem => item.notes)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "reminderOrСommentsTeacher", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</details>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="calendar"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                 header: {
+                     left: 'month,agendaWeek,agendaDay',
+                     center: 'title',
+                     right: 'custom2 prevYear,prev,next,nextYear'
+                },
+                borderColor: "black",
+                contentHeight: "auto",
+                themeSystem: 'bootstrap3',
+                 //'standard'
+                 //    bootstrap3
+                 //bootstrap3
+                locale: 'ru',
+                defaultView: 'agendaDay',
+                nowIndicator: true,
+                height: "auto",
+                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                now: new Date(),
+                minTime: "@Model.openingHour.open.ToString()",
+                maxTime: "@Model.openingHour.close.ToString()",
+                allDaySlot: false,
+                refetchResourcesOnNavigate: true,
+
+                 resourceRender: function (resourceObj, $th) {
+                     $th.append('<a href="/student/Details/' + resourceObj.id +'" target="_blank">(?)</a>'
+                    );
+                 },
+                 resources: function (callback, start, end) {
+                     $.getJSON('@Url.Action("GetResources", "calendarForTeachersOnly")', { pointStar: start.format('DD/MM/YYYY hh:mm:ss'), pointEnd: end.format('DD/MM/YYYY hh:mm:ss')}, function (data) {
+                         var resources = [];
+                         $.each(data, function (i, item) {
+                             resources.push({
+                                 id: item.Id,
+                                 title: item.Title,
+                                 businessHours: {
+                                     dow: [0, 1, 2, 3, 4, 5, 6],
+                                     start: item.startT,
+                                     end: item.endT
+                                 }
+                             });
+                         })
+                         callback(resources);
+                     });
+                 },
+
+                 events: function (start, end, timezone, callback) {
+                   $.getJSON('@Url.Action("GetEvents", "calendarForTeachersOnly")', { pointStar: start.format('DD/MM/YYYY hh:mm:ss'), pointEnd: end.format('DD/MM/YYYY hh:mm:ss')}, function (data) {
+                         var events = [];
+                         $.each(data, function (i, item) {
+                             events.push({
+                                 id: item.id,
+                                 resourceId: item.resourceId,
+                                 title: item.title,
+                                 start: parseInt(item.start) * 1000,
+                                 end: parseInt(item.end) * 1000,
+                                 url: '/timetableByDateTeacher/Details/' + item.id,
+                                 color: item.color,
+                                 textColor: item.textColor,
+                                 borderColor: "black",
+                             });
+                         })
+                       callback(events);
+                     });
+                 },
+                 eventClick: function (event) {
+                     if (event.url) {
+                         window.open(event.url);
+                         return false;
+                     }
+                 }
+            });
+
+        });
+    </script>
+}

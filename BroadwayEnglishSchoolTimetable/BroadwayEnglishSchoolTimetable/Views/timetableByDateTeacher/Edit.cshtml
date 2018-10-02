@@ -1,0 +1,99 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.timetableByDatePL
+
+@{
+    ViewBag.Title = "Редактирование расписания";
+}
+
+<h2>Редактирование расписания</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.HiddenFor(model => model.beginTime)
+    @Html.HiddenFor(model => model.begin)
+    @Html.HiddenFor(model => model.end)
+    @Html.HiddenFor(model => model.idClassRoom)
+    @Html.HiddenFor(model => model.idTeacher)
+    @Html.HiddenFor(model => model.isCanceled)
+    @Html.HiddenFor(model => model.causeOfDisruption)
+    @Html.HiddenFor(model => model.notes)
+    
+    <div class="form-group">
+        @Html.Label("Дата занятия", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.beginTime.Value.ToString("MM-dd-yyyy")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.begin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.begin)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.end, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.end)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.idClassRoom, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.ClassRoom)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.idTeacher, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Teacher)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.isCanceled, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.DisplayFor(model => model.isCanceled)
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.notes)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.passedMaterials, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.passedMaterials, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.passedMaterials, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.homework, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.homework, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.homework, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

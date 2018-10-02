@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.daysOfTheWeekPL>
+
+@{
+    ViewBag.Title = "Дни недели";
+}
+
+<h2>Дни недели</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.day)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.day)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            @*|@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,32 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.causeOfDisruptionPL
+
+@{
+    ViewBag.Title = "Детально об причине отмены занятий";
+}
+
+<h2>Детально об причине отмены занятий</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cause)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.disable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.disable)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

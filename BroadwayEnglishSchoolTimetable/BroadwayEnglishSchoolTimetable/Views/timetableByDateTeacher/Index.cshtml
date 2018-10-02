@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.timetableByDatePL>
+
+@{
+    ViewBag.Title = "Расписание занятий";
+}
+
+<h2>Расписание занятий</h2>
+
+<form class="form-inline" method="get">
+    <div class="form-group">
+        @Html.Label("Начальная дата"): <br />
+        <input class="form-control text-box single-line" name="StartDateSort" type="date" value=@ViewBag.StartDateSort>&nbsp;
+    </div>
+    <div class="form-group">
+        @Html.Label("Конечная дата"): <br />
+        <input class="form-control text-box single-line" name="EndDateSort" type="date" value=@ViewBag.EndDateSort>&nbsp;
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th style="min-width:9em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.begin).ToString(), "Index", new { sortOrder = @ViewBag.beginSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th style="min-width:9em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.end).ToString(), "Index", new { sortOrder = @ViewBag.endSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th style="max-width:7em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.TimeofMinuts).ToString(), "Index", new { sortOrder = @ViewBag.timeSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th style="min-width:10em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idGroup).ToString(), "Index", new { sortOrder = @ViewBag.groupSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idStudent).ToString(), "Index", new { sortOrder = @ViewBag.studentSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idClassRoom).ToString(), "Index", new { sortOrder = @ViewBag.roomSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.EducationalMaterials).ToString(), "Index", new { sortOrder = @ViewBag.EducationalMaterialsSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th style="max-width:15em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.notes)
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.isCanceled).ToString(), "Index", new { sortOrder = @ViewBag.cancelSort, StartDateSort = @ViewBag.StartDateSort, EndDateSort = @ViewBag.EndDateSort })
+        </th>
+        <th></th>
+        <th style="max-width:15em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.passedMaterials)
+        </th>
+        <th style="max-width:15em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.homework)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td style="min-width:9em;">
+            @Html.DisplayFor(modelItem => item.beginTime)
+        </td>
+        <td style="min-width:9em;">
+            @Html.DisplayFor(modelItem => item.endTime)
+        </td>
+        <td style="max-width:7em;">
+            @Html.DisplayFor(modelItem => item.TimeofMinuts)
+        </td>
+        <td style="min-width:10em;">
+            @if (item.idGroup != 0)
+        {
+            @Html.ActionLink(item.Group, "Details", "group", new { id = item.idGroup }, new { target = "_blank" })<br />
+    }
+        </td>
+        <td>
+            @if (item.idStudent != 0)
+        {
+            @Html.ActionLink(item.Student, "Details", "student", new { id = item.idStudent }, new { target = "_blank" })<br />
+    }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassRoom)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.EducationalMaterials)
+        </td>
+
+        <td style="max-width:15em; min-width:9em;">
+            @Html.DisplayFor(modelItem => item.notes)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.isCanceled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.causeOfDisruption.cause)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passedMaterials)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.homework)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+</table>

@@ -1,0 +1,167 @@
+﻿@model IEnumerable<BroadwayEnglishSchoolTimetable.Models.studentPL>
+
+@{
+    ViewBag.Title = "Список студентов";
+}
+
+<h2>Список студентов</h2>
+<form class="form-inline" method="get">
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.surname): &nbsp;
+        @Html.TextBox("surnameS", @ViewBag.surnameS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.name): &nbsp;
+        @Html.TextBox("nameS", @ViewBag.nameS as string, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.idEducationalMaterials): &nbsp;
+        @Html.DropDownList("EducationalMaterialsName", @ViewBag.EducationalMaterialsName as SelectList, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.idFormOfEducation): &nbsp;<br />
+        @Html.DropDownList("FormOfEducationName", @ViewBag.FormOfEducationName as SelectList, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.idLevelOfEnglish): &nbsp;
+        @Html.DropDownList("levelName", @ViewBag.levelName as SelectList, htmlAttributes: new { @class = "form-control" }) &nbsp;
+    </div>
+
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.isFirstLesson) &nbsp;
+        @Html.CheckBox("isFirstLess", (bool)@ViewBag.isFirstLess)&nbsp;
+    </div>
+    <br />
+
+
+
+
+
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.Id).ToString(), "Index", new { sortOrder = @ViewBag.idSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.surname).ToString(), "Index", new { sortOrder = @ViewBag.SurnameSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.name).ToString(), "Index", new { sortOrder = @ViewBag.NameSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm hidden-md">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.patronymic).ToString(), "Index", new { sortOrder = @ViewBag.PatronymicSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.mail).ToString(), "Index", new { sortOrder = @ViewBag.MailSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th style="max-width:8em; min-width:8em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.phoneNumber).ToString(), "Index", new { sortOrder = @ViewBag.PhoneNumberSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.dateOfBirth).ToString(), "Index", new { sortOrder = @ViewBag.DateOfBirthSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm hidden-md">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idParent).ToString(), "Index", new { sortOrder = @ViewBag.ParentSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idFormOfEducation).ToString(), "Index", new { sortOrder = @ViewBag.FormOfEducationSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idEducationalMaterials).ToString(), "Index", new { sortOrder = @ViewBag.EducationalMaterialsSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.idLevelOfEnglish).ToString(), "Index", new { sortOrder = @ViewBag.LevelOfEnglishSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs" style="max-width:15em; min-width:9em;">
+            @Html.DisplayNameFor(model => model.notes)
+        </th>
+        <th class="hidden-xs hidden-sm" style="min-width:7em;">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.dateCreate).ToString(), "Index", new { sortOrder = @ViewBag.DateCreateSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm hidden-md">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.isFirstLesson).ToString(), "Index", new { sortOrder = @ViewBag.isFirstLessonSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th class="hidden-xs hidden-sm hidden-md">
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.disable).ToString(), "Index", new { sortOrder = @ViewBag.DisableSort, surnameS = @ViewBag.surnameS as string, nameS = @ViewBag.nameS as string, levelName = @ViewBag.selLevel, FormOfEducationName = @ViewBag.selFormOfEducation, EducationalMaterialsName = @ViewBag.selEducationalMaterials, isFirstLess = @ViewBag.isFirstLess })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td class="hidden-xs hidden-sm hidden-md">
+                @Html.DisplayFor(modelItem => item.patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mail)
+            </td>
+            <td style="max-width:8em; min-width:8em;">
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+                @if (@item.dateOfBirth.HasValue)
+                {
+                    @item.dateOfBirth.Value.ToString("dd/MM/yyyy")
+                }
+            </td>
+            <td class="hidden-xs hidden-sm hidden-md">
+                @if (item.idParent != null)
+                {
+                    @Html.ActionLink(item.Parent, "Details", "parentsOfStudent", new { id = item.idParent }, new { target = "_blank" })
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormOfEducation)
+            </td>
+            <td class="hidden-xs hidden-sm">
+                @Html.DisplayFor(modelItem => item.EducationalMaterials)
+            </td>
+            <td class="hidden-xs hidden-sm">
+                @Html.DisplayFor(modelItem => item.LevelOfEnglish)
+            </td>
+            <td class="hidden-xs" style="max-width:15em; min-width:9em;">
+                @Html.DisplayFor(modelItem => item.notes)
+            </td>
+            <td class="hidden-xs hidden-sm" style="min-width:7em;">
+                @item.dateCreate.ToString("dd/MM/yyyy")
+            </td>
+            <td class="hidden-xs hidden-sm hidden-md">
+                @Html.DisplayFor(modelItem => item.isFirstLesson)
+            </td>
+            <td class="hidden-xs hidden-sm hidden-md">
+                @Html.DisplayFor(modelItem => item.disable)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (User.IsInRole("supAdmin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
+
+
+</table>

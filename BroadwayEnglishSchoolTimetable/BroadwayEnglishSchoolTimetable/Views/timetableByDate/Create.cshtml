@@ -1,0 +1,136 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.timetableByDatePL
+
+@{
+    ViewBag.Title = "Добавление расписания";
+}
+
+<h2>Добавление расписания</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.beginTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.beginTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.beginTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.endTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.endTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idGroup, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idGroup, ViewBag.GroupName as SelectList)
+                @Html.ValidationMessageFor(model => model.idGroup, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idStudent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idStudent, ViewBag.StudName as SelectList)
+                @Html.ValidationMessageFor(model => model.idStudent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+
+            @Html.LabelFor(model => model.timetableDays, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-offset-2 col-md-10">
+                <table>
+                    @for (int i = 0, j = Model.timetableDays.Count; i < j; i++)
+    {
+                <tr>
+                    <td colspan="2">
+                        <i>@Html.Label(Model.timetableDays[i].NameDay, new { htmlAttributes = new { @class = "control-label" } })</i>
+                        @Html.HiddenFor(model => Model.timetableDays[i].idDay)
+                        @Html.HiddenFor(model => Model.timetableDays[i].NameDay)
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => Model.timetableDays[i].begin, htmlAttributes: new { @class = "control-label" })</td>
+                    <td>@Html.EditorFor(model => Model.timetableDays[i].begin, new { htmlAttributes = new { @class = "form-control", id = i + "begin", onchange = "changeEvent(" + i + ")" } })</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => Model.timetableDays[i].end, htmlAttributes: new { @class = "control-label" })</td>
+                    <td>@Html.EditorFor(model => Model.timetableDays[i].end, new { htmlAttributes = new { @class = "form-control", id = i + "end", onchange = "changeEvent(" + i + ")" } })</td>
+                </tr>
+                <tr>
+                     <td></td>
+                     <td><span id=@(i+"res")></span></td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => Model.timetableDays[i].idClassRoom, htmlAttributes: new { @class = "control-label" })</td>
+                    <td>@Html.DropDownListFor(model => Model.timetableDays[i].idClassRoom, ViewBag.CRoomName as SelectList)</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => Model.timetableDays[i].idTeacher, htmlAttributes: new { @class = "control-label" })</td>
+                    <td>@Html.DropDownListFor(model => Model.timetableDays[i].idTeacher, ViewBag.TeacName as SelectList)</td>
+                </tr>
+
+                <tr>
+                    <td>@Html.LabelFor(model => Model.timetableDays[i].notes, htmlAttributes: new { @class = "control-label" })</td>
+                    <td>@Html.EditorFor(model => Model.timetableDays[i].notes, new { htmlAttributes = new { @class = "form-control" } })</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /></td>
+                </tr>
+}
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group" ng-app>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+<script>
+    function changeEvent(i) {
+        var start = new Date('1970-01-01T' + document.getElementById(i + "begin").value + ":00" + 'Z');
+        var end = new Date('1970-01-01T' + document.getElementById(i + "end").value + ":00" + 'Z');
+        var res = (end - start) / 60000;
+        if(res>0)
+            document.getElementById(i + "res").innerHTML = res+" мин.";
+        else
+            document.getElementById(i + "res").innerHTML = "";
+    }
+
+    $(document).ready(function () {
+        $("#idGroup").change(function () {
+            $('#idStudent option:selected').each(function () {
+                this.selected = false;
+            });
+        });
+        $("#idStudent").change(function () {
+            $('#idGroup option:selected').each(function () {
+                this.selected = false;
+            });
+        });
+    });
+    </script>
+}
+

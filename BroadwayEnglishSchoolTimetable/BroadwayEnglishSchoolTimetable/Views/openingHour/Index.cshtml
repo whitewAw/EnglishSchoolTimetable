@@ -1,0 +1,32 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.openingHourPL
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.open)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.open)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.close)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.close)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+</p>

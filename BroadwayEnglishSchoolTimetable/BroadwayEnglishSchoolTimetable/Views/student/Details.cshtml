@@ -1,0 +1,301 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.studentPL
+
+@{
+    ViewBag.Title = "Подробности про студента";
+}
+
+<h2>Подробности про студента</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.surname != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.surname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.surname)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+        @if (User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.mail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mail)
+            </dd>
+
+            if (Model.phoneNumber != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.phoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.phoneNumber)
+                </dd>
+            }
+        }
+
+        @if (Model.dateOfBirth != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.dateOfBirth)
+            </dt>
+
+            <dd>
+                @Model.dateOfBirth.Value.ToString("dd/MM/yyyy")
+            </dd>
+        }
+
+        @if (Model.idParent != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Parent)
+            </dt>
+
+            <dd>
+                @Html.ActionLink(Model.Parent, "Details", "parentsOfStudent", new { id = Model.idParent }, null)
+            </dd>
+        }
+
+        @if (Model.idFormOfEducation != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.FormOfEducation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FormOfEducation)
+            </dd>
+        }
+        @if (Model.idEducationalMaterials != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.EducationalMaterials)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EducationalMaterials)
+            </dd>
+        }
+
+        @if (Model.idLevelOfEnglish != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.LevelOfEnglish)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LevelOfEnglish)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+        @if (User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.dateCreate)
+            </dt>
+
+            <dd>
+                @Model.dateCreate.ToString("dd/MM/yyyy")
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isFirstLesson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isFirstLesson)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.disable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.disable)
+        </dd>
+
+
+        @if (Model.nextLesson.Count > 0 && User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.LabelFor(model => model.nextLesson, new { data_toggle = "collapse", data_target = "#hide-me" })
+            </dt>
+            <dd>
+                <div id="hide-me" class="in">
+                    <table class="table">
+                        <tr>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().begin)
+                            </th>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().end)
+                            </th>
+                            <th style="max-width:7em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().TimeofMinuts)
+                            </th>
+                            <th style="min-width:10em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().idGroup)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().idTeacher)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().isCanceled)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().idAdmin)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.nextLesson)
+                        {
+                            <tr>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.beginTime)
+                                </td>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.endTime)
+                                </td>
+                                <td style="max-width:7em;">
+                                    @Html.DisplayFor(modelItem => item.TimeofMinuts)
+                                </td>
+                                <td style="min-width:10em;">
+                                    @if (item.idGroup != 0)
+                                    {
+                                        @Html.ActionLink(item.Group, "Details", "group", new { id = item.idGroup }, new { target = "_blank" })<br />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Teacher, "Details", "teacher", new { id = item.idTeacher }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.causeOfDisruption.cause)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(item.Admin, "Details", "AdminLists", new { id = item.idAdmin }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "timetableByDate", new { id = item.Id }, new { target = "_blank" })<br />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </dd>
+        }
+
+
+
+
+        @if (Model.timeTableHistory.Count > 0 && User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.LabelFor(model => model.timeTableHistory, new { data_toggle = "collapse", data_target = "#hide-me2" })
+            </dt>
+            <dd>
+                <div id="hide-me2" class="in">
+                    <table class="table">
+                        <tr>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().begin)
+                            </th>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().end)
+                            </th>
+                            <th style="max-width:7em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().TimeofMinuts)
+                            </th>
+                            <th style="min-width:10em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().idGroup)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().idTeacher)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().isCanceled)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().idAdmin)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.timeTableHistory)
+                        {
+                            <tr>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.beginTime)
+                                </td>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.endTime)
+                                </td>
+                                <td style="max-width:7em;">
+                                    @Html.DisplayFor(modelItem => item.TimeofMinuts)
+                                </td>
+                                <td style="min-width:10em;">
+                                    @if (item.idGroup != 0)
+                                    {
+                                        @Html.ActionLink(item.Group, "Details", "group", new { id = item.idGroup }, new { target = "_blank" })<br />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Teacher, "Details", "teacher", new { id = item.idTeacher }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.causeOfDisruption.cause)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(item.Admin, "Details", "AdminLists", new { id = item.idAdmin }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "timetableByDate", new { id = item.Id }, new { target = "_blank" })<br />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </dd>
+        }
+
+    </dl>
+</div>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

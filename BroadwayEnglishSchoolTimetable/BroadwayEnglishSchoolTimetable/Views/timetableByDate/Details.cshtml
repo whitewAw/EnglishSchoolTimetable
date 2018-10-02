@@ -1,0 +1,142 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.timetableByDatePL
+
+@{
+    ViewBag.Title = "Подробно об расписании";
+}
+
+<h2>Подробно об расписании</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.begin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beginTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeofMinuts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeofMinuts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idTeacher)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Teacher, "Details", "teacher", new { id = Model.idTeacher }, new { target = "_blank" })
+        </dd>
+
+        @if (Model.idGroup != 0)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.idGroup)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Group, "Details", "group", new { id = Model.idGroup }, new { target = "_blank" })
+        </dd>
+}
+
+        @if (Model.idStudent != 0)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.idStudent)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Student, "Details", "student", new { id = Model.idStudent }, new { target = "_blank" })
+        </dd>
+}
+        <dt>
+            @Html.DisplayNameFor(model => model.idClassRoom)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.ClassRoom, "Details", "classroom", new { id = Model.idClassRoom }, new { target = "_blank" })<br />
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EducationalMaterials)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EducationalMaterials)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isCanceled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isCanceled)
+        </dd>
+        @if (Model.isCanceled == true)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.causeOfDisruption.cause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.causeOfDisruption.cause)
+        </dd>
+}
+
+        @if (!string.IsNullOrEmpty(Model.notes))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+}
+        <dt>
+            @Html.DisplayNameFor(model => model.idAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin)
+        </dd>
+        @if (!string.IsNullOrEmpty(Model.passedMaterials))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.passedMaterials)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passedMaterials)
+        </dd>
+}
+        @if (!string.IsNullOrEmpty(Model.homework))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.homework)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.homework)
+        </dd>
+}
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

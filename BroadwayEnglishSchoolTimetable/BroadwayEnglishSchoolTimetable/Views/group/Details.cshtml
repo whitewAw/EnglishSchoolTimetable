@@ -1,0 +1,262 @@
+﻿@model BroadwayEnglishSchoolTimetable.Models.groupPL
+
+@{
+    ViewBag.Title = "Детально о группе";
+}
+
+<h2>Детально о группе</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nameGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nameGroup)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.idEducationalMaterials)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.nameEducationalMaterials, "Details", "educationalMaterial", new { id = Model.idEducationalMaterials }, new { target = "_blank" })<br />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.disable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.disable)
+        </dd>
+        @if (Model.nextLesson.Count > 0 && User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.LabelFor(model => model.nextLesson, new { data_toggle = "collapse", data_target = "#hide-me" })
+            </dt>
+            <dd>
+
+                <div id="hide-me" class="collapse">
+                    <table class="table">
+                        <tr>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().begin)
+                            </th>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().end)
+                            </th>
+                            <th style="max-width:7em;">
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().TimeofMinuts)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().idTeacher)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().isCanceled)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nextLesson.FirstOrDefault().idAdmin)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.nextLesson)
+                        {
+                            <tr>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.beginTime)
+                                </td>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.endTime)
+                                </td>
+                                <td style="max-width:7em;">
+                                    @Html.DisplayFor(modelItem => item.TimeofMinuts)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Teacher, "Details", "teacher", new { id = item.idTeacher }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.causeOfDisruption.cause)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(item.Admin, "Details", "AdminLists", new { id = item.idAdmin }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "timetableByDate", new { id = item.Id }, new { target = "_blank" })<br />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+            </dd>
+        }
+
+        @if (Model.timeTableHistory.Count > 0 && User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.LabelFor(model => model.timeTableHistory, new { data_toggle = "collapse", data_target = "#hide-me2" })
+            </dt>
+            <dd>
+
+                <div id="hide-me2" class="collapse">
+                    <table class="table">
+                        <tr>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().begin)
+                            </th>
+                            <th style="min-width:9em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().end)
+                            </th>
+                            <th style="max-width:7em;">
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().TimeofMinuts)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().idTeacher)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().isCanceled)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.timeTableHistory.FirstOrDefault().idAdmin)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.timeTableHistory)
+                        {
+                            <tr>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.beginTime)
+                                </td>
+                                <td style="min-width:9em;">
+                                    @Html.DisplayFor(modelItem => item.endTime)
+                                </td>
+                                <td style="max-width:7em;">
+                                    @Html.DisplayFor(modelItem => item.TimeofMinuts)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Teacher, "Details", "teacher", new { id = item.idTeacher }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.causeOfDisruption.cause)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(item.Admin, "Details", "AdminLists", new { id = item.idAdmin }, new { target = "_blank" })<br />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "timetableByDate", new { id = item.Id }, new { target = "_blank" })<br />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+            </dd>
+        }
+
+        @if (Model.student.Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th colspan="10" style="text-align:center">
+                        <b>Список студентов:</b>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().Id).ToString()
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().surname).ToString()
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().name).ToString()
+                    </th>
+                    <th class="hidden-xs hidden-sm hidden-md">
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().patronymic).ToString()
+                    </th>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <th>
+                            @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().mail).ToString()
+                        </th>
+                        <th style="max-width:8em; min-width:8em;">
+                            @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().phoneNumber).ToString()
+                        </th>
+                    }
+                    <th class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().dateOfBirth).ToString()
+                    </th>
+                    <th class="hidden-xs hidden-sm">
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().idLevelOfEnglish).ToString()
+                    </th>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <th class="hidden-xs hidden-sm" style="min-width:7em;">
+                            @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().dateCreate).ToString()
+                        </th>
+                    }
+                    <th class="hidden-xs hidden-sm hidden-md">
+                        @Html.DisplayNameFor(model => model.studentBig.FirstOrDefault().isFirstLesson).ToString()
+                    </th>
+                </tr>
+                @foreach (var item in Model.student)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td class="hidden-xs hidden-sm hidden-md">
+                            @Html.DisplayFor(modelItem => item.patronymic)
+                        </td>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.mail)
+                            </td>
+                            <td style="max-width:8em; min-width:8em;">
+                                @Html.DisplayFor(modelItem => item.phoneNumber)
+                            </td>
+                        }
+                        <td class="hidden-xs hidden-sm" style="max-width:7em; min-width:7em;">
+                            @Html.DisplayFor(modelItem => item.dateOfBirth)
+                        </td>
+                        <td class="hidden-xs hidden-sm">
+                            @Html.DisplayFor(modelItem => item.LevelOfEnglish)
+                        </td>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <td class="hidden-xs hidden-sm" style="min-width:7em;">
+                                @Html.DisplayFor(modelItem => item.dateCreate)
+                            </td>
+                        }
+                        <td class="hidden-xs hidden-sm hidden-md">
+                            @Html.DisplayFor(modelItem => item.isFirstLesson)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+
+    </dl>
+</div>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
